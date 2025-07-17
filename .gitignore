@@ -1,0 +1,10 @@
+# Virtual environment - this is not needes in git hub
+vnev/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+.env
+
+
