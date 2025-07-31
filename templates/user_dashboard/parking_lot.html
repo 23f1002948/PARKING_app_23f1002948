@@ -1,0 +1,63 @@
+<div class="accordion" id="lotsAccordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingLots">
+      <button
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseLots"
+        aria-expanded="true"
+        aria-controls="collapseLots"
+      >
+        Parking Lots
+      </button>
+    </h2>
+    <div
+      id="collapseLots"
+      class="accordion-collapse collapse show"
+      aria-labelledby="headingLots"
+      data-bs-parent="#lotsAccordion"
+    >
+      <div class="accordion-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Address</th>
+              <th>Charge/min</th>
+              <th>Availability</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lot in lots %}
+              {% set available = lot.spots | selectattr('status', 'equalto', SpotStatus.AVAILABLE) | list | length %}
+              <tr>
+                <td>{{ lot.id }}</td>
+                <td>{{ lot.address }}</td>
+                <td>₹ {{ lot.price }}</td>
+                <td>
+                  {% if available == 0 %}
+                    <span style="color: red; font-weight: bold;">No Space Left</span>
+                  {% else %}
+                    {{ available }}
+                  {% endif %}
+                </td>
+                <td>
+                  <button
+                    class="btn btn-sm {{ 'btn-outline-danger' if available == 0 else 'btn-outline-success' }}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#bookModal{{ lot.id }}"
+                    {% if available == 0 %} disabled {% endif %}
+                  >
+                    Book
+                  </button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

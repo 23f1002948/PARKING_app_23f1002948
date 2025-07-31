@@ -1,0 +1,71 @@
+{% extends "index.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<div class="container my-4">
+  <form
+    class="row g-2 align-items-center mb-4"
+    method="get"
+    action="{{ url_for('main.search') }}"
+  >
+    <div class="col-auto">
+      <div class="input-group">
+        <select class="form-select" name="search_by" style="max-width: 200px">
+          <option value="user_id">User ID</option>
+          <option value="username">Username</option>
+          <option value="user_email">User Email</option>
+          <option value="user_address">User Address</option>
+          <option value="user_city">User City</option>
+          <option value="user_state">User State</option>
+          <option value="lot_id">Parking Lot ID</option>
+          <option value="prime_location_name">Prime Location Name</option>
+          <option value="lot_address">Lot Address</option>
+          <option value="pin_code">Pin Code</option>
+          <option value="spot_id">Parking Spot ID</option>
+          <option value="spot_status">Spot Status (O/A)</option>
+          <option value="reservation_id">Reservation ID</option>
+          <option value="reservation_user_id">Reservation User ID</option>
+          <option value="reservation_spot_id">Reservation Spot ID</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-auto">
+      <input
+        type="text"
+        class="form-control"
+        name="query"
+        placeholder="Search..."
+        value="{{ query }}"
+      />
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+
+{% if results %}
+  {% if parent_field == 'user' %}
+    {% set users = results %}
+    {% include "admin_dashboard/user_list/user_list.html" %}
+{% elif parent_field == 'lot' %}
+  {% set lots = results %}
+  <div class="row g-4">
+    {% for lot in lots %}
+      {% include "admin_dashboard/parking_card_lot.html" %}
+    {% endfor %}
+  </div>
+  {% elif parent_field == 'spot' %}
+    {# Replace with your actual spot result file if you have one #}
+    {% set spots = results %}
+    {% include "user_dashboard/parking_lot.html" %}
+  {% elif parent_field == 'reservation' %}
+    {# Replace with your actual reservation result file if you have one #}
+    {% set reservations = results %}
+    {% include "user_dashboard/history.html" %}
+  {% else %}
+    <div class="alert alert-warning">No results found.</div>
+  {% endif %}
+{% elif query %}
+  <div class="alert alert-warning">No results found.</div>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <h2 class="mb-4">Parking Lots</h2>
+<div class="row g-4">
+  {% for lot in Lots %}
+    {% include "admin_dashboard/parking_card_lot.html" %}
+    <div class="d-flex justify-content-end mt-2">
+      <!-- Edit Button: Modal Trigger -->
+      <button type="button" class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#editLotModal{{ lot.id }}">
+        Edit
+      </button>
+      <!-- Delete Button: Form -->
+      <form action="{{ url_for('main.delete_lot', lot_id=lot.id) }}" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this lot?');">
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
+    </div>
+    {% include "admin_dashboard/edit_parking_lot_modal.html" %}
+  {% endfor %}
+</div>
+
+  <!-- Add Parking Lot Button -->
+  <div class="d-flex justify-content-end mt-4">
+    <button
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#addLotModal"
+    >
+      + Add Lot
+    </button>
+  </div>
+</div>
+ 
+<!-- Add Parking Lot Modal -->
+{% include "admin_dashboard/add_parking_lot_modal.html" %}
+<!-- Occupied Parking Spot Details Modal (example for Spot 1) -->
+{% include "admin_dashboard/occupied_parking_spot_detail_modal.html" %}
+{% endblock %}

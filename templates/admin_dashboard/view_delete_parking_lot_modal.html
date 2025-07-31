@@ -1,0 +1,50 @@
+{% for spot in lot.spots %}
+<div
+  class="modal fade"
+  id="viewSpotModal{{ spot.id }}"
+  tabindex="-1"
+  aria-labelledby="viewSpotModalLabel{{ spot.id }}"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form method="POST" action="{{ url_for('main.delete_spot', spot_id=spot.id) }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewSpotModalLabel{{ spot.id }}">
+            View/Delete Parking Spot
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">ID</label>
+            <input type="text" class="form-control" value="{{ spot.id }}" readonly />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            {% if spot.status == SpotStatus.OCCUPIED %}
+              <button type="button" class="btn btn-danger">O</button>
+            {% else %}
+              <button type="button" class="btn btn-success">A</button>
+            {% endif %}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endfor %}

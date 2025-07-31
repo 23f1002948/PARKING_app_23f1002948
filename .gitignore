@@ -1,0 +1,31 @@
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# VS Code
+.vscode/
+**/.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# Environments
+.env
+*.env
+venv/
+ENV/
+
+# Flask DB
+*.sqlite3
+instance/
+
+# IDEs
+.idea/
+
+# Logs
+logs/
+*.log
+
+
